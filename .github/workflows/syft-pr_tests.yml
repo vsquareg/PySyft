@@ -141,7 +141,7 @@ jobs:
       - name: Get datasets cache dir
         id: datasets-cache
         run: /
-          python -c "from pathlib import Path; print('::set-output name=dir::' + str(Path.home()) + '/.syft/data')"
+          python -c "from pathlib import Path; import os; data_dir = Path.home() / ".syft" / "data"; os.makedirs(data_dir, exist_ok=True); print('::set-output name=dir::' + str(data_dir)')"
 
       - name: Cache datasets
         uses: actions/cache@v2
