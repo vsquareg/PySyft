@@ -213,7 +213,7 @@ jobs:
 
       - name: Get datasets cache dir
         id: datasets-cache
-        run: /
+        run: |
           python -c "from pathlib import Path; print('::set-output name=dir::' + str(Path.home()) + '/.syft/data')"
 
       - name: Cache datasets
@@ -288,7 +288,7 @@ jobs:
 
       - name: Get datasets cache dir
         id: datasets-cache
-        run: /
+        run: |
           python -c "from pathlib import Path; print('::set-output name=dir::' + str(Path.home()) + '/.syft/data')"
 
       - name: Cache datasets
@@ -354,7 +354,7 @@ jobs:
 
       - name: Get datasets cache dir
         id: datasets-cache
-        run: /
+        run: |
           python -c "from pathlib import Path; print('::set-output name=dir::' + str(Path.home()) + '/.syft/data')"
 
       - name: Cache datasets
