@@ -140,7 +140,7 @@ jobs:
 
       - name: Get datasets cache dir
         id: datasets-cache
-        run: /
+        run: | 
           python -c "from pathlib import Path; import os; data_dir = Path.home() / '.syft' / 'data'; os.makedirs(data_dir, exist_ok=True); print('::set-output name=dir::' + str(data_dir)')"
 
       - name: Cache datasets
