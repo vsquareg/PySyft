@@ -10,7 +10,7 @@ from google.protobuf.message import Message
 from ....logger import traceback_and_raise
 from ....proto.util.data_message_pb2 import DataMessage
 from ....util import index_syft_by_module_name
-
+from ...compression.bytes_compressor import BytesCompressor
 
 def _deserialize(
     blob: Union[str, dict, bytes, Message],
@@ -53,6 +53,7 @@ def _deserialize(
     )
 
     if from_bytes:
+        blob = BytesCompressor.decompress(blob)
         data_message = DataMessage()
         data_message.ParseFromString(blob)
         obj_type = index_syft_by_module_name(fully_qualified_name=data_message.obj_type)
@@ -107,6 +108,17 @@ def _deserialize(
                         # found it, lets overwrite obj_type and break
                         obj_type = possible_type
                         break
+            else:
+                last_resort_obj_types = [obj_type[0]]
+                last_resort_obj_types_names = [obj_type[0].__name__]
+                for possible_type in obj_type:
+                    if possible_type.__name__ not in last_resort_obj_types_names:
+                        last_resort_obj_types.append(possible_type)
+                        last_resort_obj_types_names.append(possible_type.__name__)
+                        break
+                if len(last_resort_obj_types) == 1:
+                    obj_type = obj_type[0]
+
 
     if not isinstance(obj_type, type):
         traceback_and_raise(f"{deserialization_error}. {type(blob)}")
