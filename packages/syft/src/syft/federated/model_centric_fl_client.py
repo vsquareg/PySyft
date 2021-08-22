@@ -1,4 +1,4 @@
-# relative
+# syft relative
 from ..federated import JSONDict
 from ..federated.model_centric_fl_base import ModelCentricFLBase
 from ..lib.python import List

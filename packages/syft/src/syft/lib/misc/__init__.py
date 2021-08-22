@@ -12,7 +12,7 @@ from typing import Set
 from cachetools import cached
 from cachetools.keys import hashkey
 
-# relative
+# syft relative
 from ...ast import add_classes
 from ...ast import add_methods
 from ...ast import add_modules

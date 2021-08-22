@@ -12,7 +12,7 @@ from sympc.tensor import ShareTensor
 # syft absolute
 import syft
 
-# relative
+# syft relative
 from ...generate_wrapper import GenerateWrapper
 from ...proto.lib.sympc.share_tensor_pb2 import ShareTensor as ShareTensor_PB
 from ..python.primitive_factory import PrimitiveFactory

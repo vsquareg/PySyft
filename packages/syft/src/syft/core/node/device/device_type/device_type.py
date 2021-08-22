@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-# relative
+# syft relative
 from .specs.cpu import CPU
 from .specs.gpu import GPU
 from .specs.network import Network

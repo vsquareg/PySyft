@@ -153,7 +153,6 @@ def test_repr_to_kwargs() -> None:
     )
 
 
-@pytest.mark.xfail
 def test_module_setup(root_client: sy.VirtualMachineClient, model: SyNet) -> None:
     remote = copy.copy(model)
     remote.setup(torch_ref=root_client.torch)
@@ -183,7 +182,6 @@ def test_module_modules_empty(modelEmpty: SyNetEmpty) -> None:
     assert len(modules.items()) == 0
 
 
-@pytest.mark.skip(reason="iterators don't work right now")
 @pytest.mark.slow
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_module_parameteres(
@@ -273,7 +271,6 @@ def test_module_gradient_sanity(
     assert model.parameters()[-1].grad is not None
 
 
-@pytest.mark.skip(reason="iterators don't work right now")
 @pytest.mark.slow
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_module_send_get(
@@ -314,7 +311,6 @@ def test_module_send_get(
     assert model.send(root_client) is None
 
 
-@pytest.mark.skip(reason="iterators don't work right now")
 @pytest.mark.slow
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_debug_sum_layers(
@@ -327,7 +323,6 @@ def test_debug_sum_layers(
     assert model_ptr.debug_sum_layers() is None
 
 
-@pytest.mark.xfail
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_sy_module(
     apache_arrow_backend: bool,
@@ -353,7 +348,6 @@ def test_sy_module(
     assert th.equal(torch_out, sy_out)
 
 
-@pytest.mark.xfail
 @pytest.mark.slow
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_recompile_downloaded_sy_module(
@@ -374,7 +368,6 @@ def test_recompile_downloaded_sy_module(
     assert th.equal(torch_out, sy_out)
 
 
-@pytest.mark.skip(reason="iterators don't work right now")
 @pytest.mark.slow
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_nest_sy_module(
@@ -399,7 +392,6 @@ def test_nest_sy_module(
     )
 
 
-@pytest.mark.xfail
 def test_sy_sequential(
     root_client: sy.VirtualMachineClient, sy_sequential: SySequential
 ) -> None:

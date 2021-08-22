@@ -3,7 +3,7 @@
 # third party
 import torch as th
 
-# relative
+# syft relative
 from ...generate_wrapper import GenerateWrapper
 from ...lib.torch.tensor_util import tensor_deserializer
 from ...lib.torch.tensor_util import tensor_serializer

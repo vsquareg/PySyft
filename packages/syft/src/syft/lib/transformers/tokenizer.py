@@ -2,7 +2,7 @@
 from tokenizers import Tokenizer
 from transformers import PreTrainedTokenizerFast
 
-# relative
+# syft relative
 from ... import deserialize
 from ...generate_wrapper import GenerateWrapper
 from ...lib.python.primitive_factory import PrimitiveFactory

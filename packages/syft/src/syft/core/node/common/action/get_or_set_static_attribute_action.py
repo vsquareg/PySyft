@@ -8,7 +8,7 @@ from typing import Optional
 from google.protobuf.reflection import GeneratedProtocolMessageType
 from nacl.signing import VerifyKey
 
-# relative
+# syft relative
 from ..... import lib
 from ..... import serialize
 from .....proto.core.node.common.action.get_set_static_attribute_pb2 import (
@@ -52,7 +52,6 @@ class GetSetStaticAttributeAction(ImmediateActionWithoutReply):
         return RunClassMethodAction.intersect_keys(left, right)
 
     def execute_action(self, node: AbstractNode, verify_key: VerifyKey) -> None:
-
         static_attribute_solver = node.lib_ast.query(self.path)
 
         if self.action == StaticAttributeAction.SET:

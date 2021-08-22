@@ -8,7 +8,7 @@ from typing import List
 from packaging import version
 import torch
 
-# relative
+# syft relative
 from ...generate_wrapper import GenerateWrapper
 from ...lib.util import full_name_with_name
 from ...proto.lib.torch.returntypes_pb2 import ReturnTypes as ReturnTypes_PB

@@ -7,7 +7,7 @@ from typing import Dict
 from typing import List
 from typing import Type
 
-# relative
+# syft relative
 from ..pointer import Pointer
 
 

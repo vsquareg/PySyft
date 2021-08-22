@@ -6,20 +6,17 @@ from typing import Type
 from google.protobuf.message import Message
 from google.protobuf.reflection import GeneratedProtocolMessageType
 
-# relative
+# syft relative
 from ....logger import traceback_and_raise
 from ....util import random_name
 
 
 def bind_protobuf(cls: Any) -> Any:
     protobuf_schema = cls.get_protobuf_schema()
-    # overloading a protobuf by adding multiple classes and we will check the
-    # obj_type string later to dispatch to the correct one
-    if hasattr(protobuf_schema, "schema2type"):
-        if isinstance(protobuf_schema.schema2type, list):
-            protobuf_schema.schema2type.append(cls)
-        else:
-            protobuf_schema.schema2type = [protobuf_schema.schema2type, cls]
+    # If protobuf already has schema2type, means it's related to multiple types.
+    # Set it's schema2type to None, becuase we can't take use of it anymore.
+    if getattr(protobuf_schema, "schema2type", None):
+        protobuf_schema.schema2type = None
     else:
         protobuf_schema.schema2type = cls
 
@@ -133,6 +130,7 @@ class Serializable:
         """
 
         traceback_and_raise(NotImplementedError)
+        raise NotImplementedError
 
     @staticmethod
     def get_protobuf_schema() -> GeneratedProtocolMessageType:

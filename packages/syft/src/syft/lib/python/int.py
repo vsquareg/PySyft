@@ -6,7 +6,7 @@ from typing import Optional
 # third party
 from google.protobuf.reflection import GeneratedProtocolMessageType
 
-# relative
+# syft relative
 from ... import deserialize
 from ... import serialize
 from ...core.common import UID

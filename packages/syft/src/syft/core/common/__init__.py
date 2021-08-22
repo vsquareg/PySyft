@@ -1,4 +1,4 @@
-# relative
+# syft relative
 from .message import AbstractMessage
 from .object import ObjectWithID
 from .uid import UID

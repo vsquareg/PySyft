@@ -7,7 +7,7 @@ from typing import Tuple as TypeTuple
 # third party
 import tenseal as ts
 
-# relative
+# syft relative
 from . import bfv_vector  # noqa: 401
 from . import ckks_tensor  # noqa: 401
 from . import ckks_vector  # noqa: 401

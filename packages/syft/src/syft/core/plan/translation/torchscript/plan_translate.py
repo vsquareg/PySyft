@@ -8,7 +8,7 @@ from typing import Optional
 # third party
 import torch as th
 
-# relative
+# syft relative
 from .....core.node.common.client import Client
 from .....core.store import ObjectStore
 from .....lib.python.collections import OrderedDict as SyOrderedDict

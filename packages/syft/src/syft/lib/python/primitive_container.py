@@ -1,7 +1,7 @@
 # stdlib
 from typing import Any as TypeAny
 
-# relative
+# syft relative
 from .types import SyPrimitiveRet
 
 

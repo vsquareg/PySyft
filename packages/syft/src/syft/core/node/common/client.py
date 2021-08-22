@@ -13,7 +13,7 @@ from nacl.signing import SigningKey
 from nacl.signing import VerifyKey
 import pandas as pd
 
-# relative
+# syft relative
 from .... import serialize
 from ....lib import create_lib_ast
 from ....logger import critical
@@ -31,27 +31,22 @@ from ...common.message import SignedImmediateSyftMessageWithReply
 from ...common.message import SignedImmediateSyftMessageWithoutReply
 from ...common.message import SyftMessage
 from ...common.serde.deserialize import _deserialize
-from ...common.serde.serializable import Serializable
-from ...common.serde.serializable import bind_protobuf
 from ...common.uid import UID
 from ...io.location import Location
 from ...io.location import SpecificLocation
 from ...io.route import Route
 from ...io.route import SoloRoute
 from ...io.virtual import VirtualClientConnection
+from ...node.common.service.obj_search_service import ObjectSearchMessage
 from ...pointer.garbage_collection import GarbageCollection
 from ...pointer.garbage_collection import gc_get_default_strategy
 from ...pointer.pointer import Pointer
 from ..abstract.node import AbstractNodeClient
 from .action.exception_action import ExceptionMessage
-from .node_service.child_node_lifecycle.child_node_lifecycle_service import (
-    RegisterChildNodeMessage,
-)
-from .node_service.object_search.obj_search_service import ObjectSearchMessage
+from .service.child_node_lifecycle_service import RegisterChildNodeMessage
 
 
-@bind_protobuf
-class Client(AbstractNodeClient, Serializable):
+class Client(AbstractNodeClient):
     """Client is an incredibly powerful abstraction in Syft. We assume that,
     no matter where a client is, it can figure out how to communicate with
     the Node it is supposed to point to. If I send you a client I have
@@ -70,7 +65,7 @@ class Client(AbstractNodeClient, Serializable):
         signing_key: Optional[SigningKey] = None,
         verify_key: Optional[VerifyKey] = None,
     ):
-        name = f"{name}" if name is not None else None
+        name = f"{name} Client" if name is not None else None
         super().__init__(
             name=name, network=network, domain=domain, device=device, vm=vm
         )
@@ -143,8 +138,6 @@ class Client(AbstractNodeClient, Serializable):
                 if lib_attr is not None:
                     python_attr = getattr(lib_attr, "python", None)
                     setattr(self, "python", python_attr)
-                    python_attr = getattr(lib_attr, "adp", None)
-                    setattr(self, "adp", python_attr)
 
             except Exception as e:
                 critical(f"Failed to set python attribute on client. {e}")
@@ -294,16 +287,33 @@ class Client(AbstractNodeClient, Serializable):
         self.default_route = route_index
 
     def _object2proto(self) -> Client_PB:
+        obj_type = get_fully_qualified_name(obj=self)
+
+        routes = [serialize(route) for route in self.routes]
+
+        network = self.network._object2proto() if self.network is not None else None
+
+        domain = self.domain._object2proto() if self.domain is not None else None
+
+        device = self.device._object2proto() if self.device is not None else None
+
+        vm = self.vm._object2proto() if self.vm is not None else None
+
         client_pb = Client_PB(
-            obj_type=get_fully_qualified_name(obj=self),
+            obj_type=obj_type,
             id=serialize(self.id),
             name=self.name,
-            routes=[serialize(route) for route in self.routes],
-            network=self.network._object2proto() if self.network else None,
-            domain=self.domain._object2proto() if self.domain else None,
-            device=self.device._object2proto() if self.device else None,
-            vm=self.vm._object2proto() if self.vm else None,
+            routes=routes,
+            has_network=self.network is not None,
+            network=network,
+            has_domain=self.domain is not None,
+            domain=domain,
+            has_device=self.device is not None,
+            device=device,
+            has_vm=self.vm is not None,
+            vm=vm,
         )
+
         return client_pb
 
     @staticmethod
@@ -312,13 +322,25 @@ class Client(AbstractNodeClient, Serializable):
         klass = module_parts.pop()
         obj_type = getattr(sys.modules[".".join(module_parts)], klass)
 
+        network = (
+            SpecificLocation._proto2object(proto.network) if proto.has_network else None
+        )
+        domain = (
+            SpecificLocation._proto2object(proto.domain) if proto.has_domain else None
+        )
+        device = (
+            SpecificLocation._proto2object(proto.device) if proto.has_device else None
+        )
+        vm = SpecificLocation._proto2object(proto.vm) if proto.has_vm else None
+        routes = [SoloRoute._proto2object(route) for route in proto.routes]
+
         obj = obj_type(
             name=proto.name,
-            routes=[_deserialize(route) for route in proto.routes],
-            network=_deserialize(proto.network) if proto.HasField("network") else None,
-            domain=_deserialize(proto.domain) if proto.HasField("domain") else None,
-            device=_deserialize(proto.device) if proto.HasField("device") else None,
-            vm=_deserialize(proto.vm) if proto.HasField("vm") else None,
+            routes=routes,
+            network=network,
+            domain=domain,
+            device=device,
+            vm=vm,
         )
 
         if type(obj) != obj_type:
@@ -430,6 +452,3 @@ class StoreClient:
                 }
             )
         return pd.DataFrame(obj_lines)
-
-    def _repr_html_(self) -> str:
-        return self.pandas._repr_html_()

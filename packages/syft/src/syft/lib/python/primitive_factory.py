@@ -8,7 +8,7 @@ from typing import Any
 from typing import Optional
 from typing import Union
 
-# relative
+# syft relative
 from .. import python
 from ...core.common import UID
 from ...logger import traceback_and_raise
@@ -72,7 +72,6 @@ class PrimitiveFactory(ABC):
         value: Union[PrimitiveType, type(NotImplemented), PyPrimitive],  # type: ignore
         id: Optional[UID] = None,
         recurse: bool = False,
-        temporary_box: bool = False,
     ) -> Any:
         if isinstance(value, PyPrimitive):
             return value
@@ -116,9 +115,7 @@ class PrimitiveFactory(ABC):
                         if isprimitive(value=val):
                             new_list.append(
                                 PrimitiveFactory.generate_primitive(
-                                    value=val,
-                                    recurse=recurse,
-                                    temporary_box=temporary_box,
+                                    value=val, recurse=recurse
                                 )
                             )
                         else:
@@ -143,9 +140,7 @@ class PrimitiveFactory(ABC):
                         for k, val in items():
                             if isprimitive(value=val):
                                 new_dict[k] = PrimitiveFactory.generate_primitive(
-                                    value=val,
-                                    recurse=recurse,
-                                    temporary_box=temporary_box,
+                                    value=val, recurse=recurse
                                 )
                             else:
                                 new_dict[k] = val
@@ -155,7 +150,7 @@ class PrimitiveFactory(ABC):
             return new_dict
 
         if type(value) in [str, UserString]:
-            return python.String(value=value, id=id, temporary_box=temporary_box)
+            return python.String(value=value, id=id)
 
         if value is NotImplemented:
             return value

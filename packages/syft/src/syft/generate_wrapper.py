@@ -8,7 +8,7 @@ from google.protobuf.reflection import GeneratedProtocolMessageType
 # syft absolute
 import syft
 
-# relative
+# syft relative
 from .core.common.serde.serializable import Serializable
 from .core.common.serde.serializable import bind_protobuf
 from .util import aggressive_set_attr
@@ -44,12 +44,7 @@ def GenerateWrapper(
         def upcast(self) -> Any:
             return self.obj
 
-        @staticmethod
-        def wrapped_type() -> type:
-            return wrapped_type
-
-    # TODO: refactor like proxy class to get correct name
-    # WARNING: Changing this can break the Wrapper lookup during deserialize
+    # set __module__ and __name__
     module_parts = import_path.split(".")
     klass = module_parts.pop()
     Wrapper.__name__ = f"{klass}Wrapper"

@@ -1,4 +1,4 @@
-# relative
+# syft relative
 from ...core.node.network.client import NetworkClient
 from ..connections.http_connection import HTTPConnection
 from .signaling_client import SignalingClient

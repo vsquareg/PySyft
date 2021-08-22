@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torchvision
 
-# relative
+# syft relative
 from ... import deserialize
 from ... import serialize
 from ...generate_wrapper import GenerateWrapper

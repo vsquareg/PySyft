@@ -8,7 +8,7 @@ from typing import List
 from syft.lib.python import List as SyList
 from syft.lib.python.string import String
 
-# relative
+# syft relative
 from ...syft.grid.duet.process_test import SyftTestProcess
 
 

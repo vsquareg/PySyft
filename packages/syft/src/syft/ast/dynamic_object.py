@@ -5,7 +5,7 @@ from typing import Optional
 from typing import Tuple
 from typing import Union
 
-# relative
+# syft relative
 from .. import ast
 from ..logger import traceback_and_raise
 

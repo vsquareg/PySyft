@@ -9,7 +9,7 @@ from typing import Set
 from nacl.signing import SigningKey
 from nacl.signing import VerifyKey
 
-# relative
+# syft relative
 from ....logger import traceback_and_raise
 from ...common.message import SignedEventualSyftMessageWithoutReply
 from ...common.message import SignedImmediateSyftMessageWithReply

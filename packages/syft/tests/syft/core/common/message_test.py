@@ -1,7 +1,6 @@
 # third party
 from nacl.signing import SigningKey
 from nacl.signing import VerifyKey
-import pytest
 
 # syft absolute
 import syft as sy
@@ -54,8 +53,6 @@ def get_verify_key() -> VerifyKey:
     return get_signing_key().verify_key
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_create_signed_message() -> None:
     """Tests that SignedMessage can be created and serialized"""
 
@@ -78,8 +75,6 @@ def test_create_signed_message() -> None:
     assert sig_msg.serialized_message == serialize(msg, to_bytes=True)
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_deserialize_signed_message() -> None:
     """Tests that SignedMessage can be deserialized"""
 
@@ -105,8 +100,6 @@ def test_deserialize_signed_message() -> None:
     assert sig_msg.serialized_message == sig_msg_comp.serialized_message
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_serde_matches() -> None:
     """Tests that the nested serde is reversible at all levels"""
 
@@ -138,8 +131,6 @@ def test_serde_matches() -> None:
     assert sig_msg_comp == sig_msg
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_verify_message() -> None:
     """Tests that SignedMessage can be verified"""
 
@@ -152,8 +143,6 @@ def test_verify_message() -> None:
     assert veri_msg == obj
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_verify_message_fails_key() -> None:
     """Tests that SignedMessage cant be verified with the wrong verification key"""
 
@@ -171,8 +160,6 @@ def test_verify_message_fails_key() -> None:
     assert sig_msg.is_valid is False
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_verify_message_fails_sig() -> None:
     """Tests that SignedMessage cant be verified with the wrong signature"""
 
@@ -189,8 +176,6 @@ def test_verify_message_fails_sig() -> None:
     assert sig_msg.is_valid is False
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_verify_message_fails_message() -> None:
     """Tests that SignedMessage cant be verified with the wrong message"""
 
@@ -207,8 +192,6 @@ def test_verify_message_fails_message() -> None:
     assert sig_msg.is_valid is False
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_verify_message_fails_empty() -> None:
     """Tests that SignedMessage cant be verified with empty sig"""
 
@@ -225,8 +208,6 @@ def test_verify_message_fails_empty() -> None:
     assert sig_msg.is_valid is False
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_decode_message() -> None:
     """Tests that SignedMessage serialized_message is not encrypted"""
 
@@ -239,8 +220,6 @@ def test_decode_message() -> None:
     assert nonveri_msg == obj
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 def test_get_message() -> None:
     """Tests that SignedMessage verification can be ignored"""
 

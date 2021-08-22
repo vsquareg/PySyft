@@ -1,4 +1,4 @@
-# relative
+# syft relative
 from .client import NetworkClient
 from .network import Network
 

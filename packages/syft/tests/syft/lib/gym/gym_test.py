@@ -9,11 +9,6 @@ np = pytest.importorskip("numpy")
 gym = pytest.importorskip("gym")
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail(
-    reason="This was broken when we switched from using a Dictionary obj store to a SQL one which means"
-    + "that there's missing serialization functionality. Please address when you can."
-)
 @pytest.mark.vendor(lib="gym")
 @pytest.mark.parametrize("arrow_backend", [False, True])
 def test_remote_gym(arrow_backend: bool, root_client: sy.VirtualMachineClient) -> None:

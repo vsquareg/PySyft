@@ -1,2 +1,2 @@
-# relative
+# syft relative
 from . import pointer  # noqa: F401

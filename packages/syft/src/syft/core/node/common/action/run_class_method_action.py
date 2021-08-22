@@ -12,7 +12,7 @@ from nacl.signing import VerifyKey
 # syft absolute
 from syft.core.plan.plan import Plan
 
-# relative
+# syft relative
 from ..... import lib
 from ..... import serialize
 from .....logger import critical

@@ -1,5 +1,4 @@
 # stdlib
-from typing import Any
 from typing import Optional
 from typing import Union
 
@@ -8,7 +7,7 @@ from nacl.signing import SigningKey
 from nacl.signing import VerifyKey
 from typing_extensions import final
 
-# relative
+# syft relative
 from ....logger import critical
 from ....logger import traceback_and_raise
 from ...common.message import SignedMessage
@@ -51,13 +50,12 @@ class VirtualMachine(Node):
 
         # specific location with name
         self.vm = SpecificLocation(name=self.name)
+        # syft relative
+        from ..domain.service.vm_service import VMRequestAnswerMessageService
+        from ..domain.service.vm_service import VMRequestService
 
-        # relative
-        from ..common.node_service.vm_request_service.vm_service import (
-            VMRequestAnswerService,
-        )
-
-        self.immediate_services_with_reply.append(VMRequestAnswerService)
+        self.immediate_services_without_reply.append(VMRequestService)
+        self.immediate_services_with_reply.append(VMRequestAnswerMessageService)
         # All node subclasses have to call this at the end of their __init__
         self._register_services()
         self.post_init()
@@ -93,15 +91,3 @@ class VirtualMachine(Node):
         #                 "Framework already imported. Why are you importing it twice?"
         #             ))
         #         self.frameworks.attrs[name] = ast
-
-    def __hash__(self) -> int:
-        return hash(self.vm.id)
-
-    def __eq__(self, other: Any) -> bool:
-        if not isinstance(other, VirtualMachine):
-            return False
-
-        if self.vm.id != other.vm.id:
-            return False
-
-        return True

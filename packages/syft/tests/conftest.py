@@ -20,7 +20,7 @@ from syft.lib import VendorLibraryImportException
 from syft.lib import _load_lib
 from syft.lib import vendor_requirements_available
 
-# relative
+# syft relative
 from .syft.notebooks import free_port
 
 logger.remove()
@@ -165,10 +165,9 @@ def node() -> sy.VirtualMachine:
     return sy.VirtualMachine(name="Bob")
 
 
-# this is not working anymore
-# @pytest.fixture(autouse=True)
-# def node_store(node: sy.VirtualMachine) -> None:
-#     node.store.clear()
+@pytest.fixture(autouse=True)
+def node_store(node: sy.VirtualMachine) -> None:
+    node.store.clear()
 
 
 @pytest.fixture(scope="session")

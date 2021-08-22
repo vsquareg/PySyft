@@ -1,4 +1,4 @@
-# relative
+# syft relative
 from .group.group import LocationGroup
 from .group.registry import RegistryBackedLocationGroup
 from .group.subscription import SubscriptionBackedLocationGroup

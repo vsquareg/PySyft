@@ -3,7 +3,7 @@ import numpy as np
 import pyarrow as pa
 import torch
 
-# relative
+# syft relative
 from ...experimental_flags import flags
 from ...generate_wrapper import GenerateWrapper
 from ...lib.torch.tensor_util import tensor_deserializer

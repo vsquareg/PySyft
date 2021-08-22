@@ -2,7 +2,7 @@
 # third party
 from typing_extensions import final
 
-# relative
+# syft relative
 from ...node.common.action.garbage_collect_object_action import (
     GarbageCollectObjectAction,
 )

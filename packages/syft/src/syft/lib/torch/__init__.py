@@ -7,7 +7,7 @@ from typing import Union
 from packaging import version
 import torch
 
-# relative
+# syft relative
 from . import device  # noqa: 401
 from . import parameter  # noqa: 401
 from . import return_types  # noqa: 401

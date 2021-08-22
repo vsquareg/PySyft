@@ -6,7 +6,7 @@ from typing import Optional
 from typing import Union
 from typing import Union as TypeUnion
 
-# relative
+# syft relative
 from ..ast.globals import Globals
 from ..core.node.abstract.node import AbstractNodeClient
 

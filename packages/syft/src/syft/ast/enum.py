@@ -6,7 +6,7 @@ from enum import Enum
 from typing import Any
 from typing import Optional
 
-# relative
+# syft relative
 from .. import ast
 from ..core.common.pointer import AbstractPointer
 from ..core.node.abstract.node import AbstractNodeClient

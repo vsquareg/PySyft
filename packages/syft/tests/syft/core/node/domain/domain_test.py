@@ -4,10 +4,8 @@ import torch as th
 
 # syft absolute
 from syft.core.common.message import SyftMessage
-from syft.core.node.common.node_service.request_receiver.request_receiver_messages import (
-    RequestStatus,
-)
 from syft.core.node.domain import Domain
+from syft.core.node.domain.service import RequestStatus
 
 
 @pytest.mark.asyncio
@@ -25,8 +23,6 @@ def test_domain_serde() -> None:
     _ = tensor.send(domain_1_client)
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 @pytest.mark.asyncio
 def test_domain_request_pending() -> None:
     domain_1 = Domain(name="remote domain")
@@ -56,8 +52,6 @@ def test_domain_request_pending() -> None:
     assert RequestStatus.Pending == response
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 @pytest.mark.slow
 @pytest.mark.asyncio
 def test_domain_request_denied() -> None:
@@ -90,8 +84,6 @@ def test_domain_request_denied() -> None:
     assert RequestStatus.Rejected == response
 
 
-# MADHAVA: this needs fixing
-@pytest.mark.xfail
 @pytest.mark.asyncio
 def test_domain_request_accepted() -> None:
     domain_1 = Domain(name="remote domain")

@@ -7,7 +7,6 @@ import syft as sy
 from syft.lib.python.collections import OrderedDict
 
 
-@pytest.mark.skip(reason="iterators don't work right now")
 @pytest.mark.slow
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_linear_module(
@@ -37,7 +36,6 @@ def test_linear_module(
     assert (remote_sd2["bias"] == sd2["bias"]).all()
 
 
-@pytest.mark.xfail
 @pytest.mark.parametrize("apache_arrow_backend", [True, False])
 def test_relu_module(
     apache_arrow_backend: bool, root_client: sy.VirtualMachineClient

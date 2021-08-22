@@ -4,7 +4,7 @@ from typing import Union
 # third party
 from nacl.signing import VerifyKey
 
-# relative
+# syft relative
 from ....common.message import EventualSyftMessageWithoutReply
 from ....common.message import ImmediateSyftMessageWithReply
 from ....common.message import ImmediateSyftMessageWithoutReply

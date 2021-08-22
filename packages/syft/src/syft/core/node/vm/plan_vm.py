@@ -6,7 +6,7 @@ from typing import Optional
 from nacl.signing import SigningKey
 from nacl.signing import VerifyKey
 
-# relative
+# syft relative
 from ...common.message import SignedImmediateSyftMessageWithoutReply
 from ...io.location import Location
 from ...io.location import SpecificLocation

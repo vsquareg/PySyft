@@ -3,7 +3,7 @@
 # third party
 import sklearn  # noqa: 401
 
-# relative
+# syft relative
 from ...generate_wrapper import GenerateWrapper
 from ...lib.python.dict import Dict
 from ...lib.python.primitive_factory import PrimitiveFactory

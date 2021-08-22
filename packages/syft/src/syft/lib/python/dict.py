@@ -12,7 +12,7 @@ from typing import Union
 # third party
 from google.protobuf.reflection import GeneratedProtocolMessageType
 
-# relative
+# syft relative
 from ... import deserialize
 from ... import serialize
 from ...core.common import UID
@@ -71,13 +71,6 @@ class Dict(UserDict, PyPrimitive):
         # If you want to update it use the _id setter after creation.
         self._id = UID()
 
-        temporary_box = kwargs["temporary_box"] if "temporary_box" in kwargs else False
-        if temporary_box:
-            PyPrimitive.__init__(
-                self,
-                temporary_box=temporary_box,
-            )
-
     @property
     def id(self) -> UID:
         """We reveal PyPrimitive.id as a property to discourage users and
@@ -91,10 +84,7 @@ class Dict(UserDict, PyPrimitive):
 
     def upcast(self) -> TypeDict:
         # recursively upcast
-        result = {k: upcast(v) for k, v in self.items()}
-        if "temporary_box" in result:
-            del result["temporary_box"]
-        return result
+        return {k: upcast(v) for k, v in self.items()}
 
     def __contains__(self, other: Any) -> SyPrimitiveRet:
         res = super().__contains__(other)
@@ -218,17 +208,7 @@ class Dict(UserDict, PyPrimitive):
             for element in self.data.values()
         ]
 
-        if hasattr(self, "temporary_box"):
-            temporary_box = self.temporary_box
-        else:
-            temporary_box = False
-
-        return Dict_PB(
-            id=id_,
-            keys=keys,
-            values=values,
-            temporary_box=temporary_box,
-        )
+        return Dict_PB(id=id_, keys=keys, values=values)
 
     @staticmethod
     def _proto2object(proto: Dict_PB) -> "Dict":
@@ -244,7 +224,6 @@ class Dict(UserDict, PyPrimitive):
             for element in proto.keys
         ]
         new_dict = Dict(dict(zip(keys, values)))
-        new_dict.temporary_box = proto.temporary_box
         new_dict._id = id_
         return new_dict
 

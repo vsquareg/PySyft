@@ -7,7 +7,7 @@ from typing import Set as TypeSet
 # third party
 from google.protobuf.reflection import GeneratedProtocolMessageType
 
-# relative
+# syft relative
 from ... import deserialize
 from ... import serialize
 from ...core.common.serde.serializable import bind_protobuf

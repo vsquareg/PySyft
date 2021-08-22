@@ -12,7 +12,7 @@ from google.protobuf.reflection import GeneratedProtocolMessageType
 import requests
 import websocket
 
-# relative
+# syft relative
 from ..core.common.serde.deserialize import _deserialize as deserialize
 from ..core.common.serde.serialize import _serialize as serialize
 from ..federated import JSONDict

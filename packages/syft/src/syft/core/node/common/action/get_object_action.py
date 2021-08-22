@@ -5,7 +5,7 @@ from typing import Optional
 from google.protobuf.reflection import GeneratedProtocolMessageType
 from nacl.signing import VerifyKey
 
-# relative
+# syft relative
 from ..... import serialize
 from .....logger import critical
 from .....logger import debug
@@ -26,14 +26,14 @@ from ....common.uid import UID
 from ....io.address import Address
 from ....store.storeable_object import StorableObject
 from ...abstract.node import AbstractNode
-from ..node_service.auth import AuthorizationException
+from ..service.auth import AuthorizationException
 from .common import ImmediateActionWithReply
 
 
 @bind_protobuf
 class GetObjectResponseMessage(ImmediateSyftMessageWithoutReply):
     """
-    GetObjectResponseMessages are the type of messages that are sent in response to a
+    GetObjectResponseMessages are the type of messages that are sent in reponse to a
     :class:`GetObjectAction`. They contain the object that was asked for.
 
     Attributes:
@@ -207,7 +207,6 @@ class GetObjectAction(ImmediateActionWithReply):
             return msg
         except Exception as e:
             traceback_and_raise(e)
-        raise Exception(f"Unable to execute action with {type(self)}")
 
     @property
     def pprint(self) -> str:

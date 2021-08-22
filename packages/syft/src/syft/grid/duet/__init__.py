@@ -9,14 +9,10 @@ from typing import Optional
 
 # third party
 import requests
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
-# relative
+# syft relative
 from ...core.common.environment import is_jupyter
 from ...core.node.common.client import Client
-from ...core.node.common.node_table import Base
-from ...core.node.common.node_table.utils import seed_db
 from ...core.node.domain.domain import Domain
 from ...logger import error
 from ...logger import info
@@ -153,10 +149,7 @@ def begin_duet_logger(my_domain: Domain) -> None:
                 iterator += 1
 
     if hasattr(sys.stdout, "parent_header"):
-        # Disabled until we can fix the race condition against the SQLite table
-        # creation process
-        pass
-        # counterThread().start()
+        counterThread().start()
 
 
 def duet(
@@ -164,13 +157,16 @@ def duet(
     logging: bool = True,
     network_url: str = "",
     loopback: bool = False,
+    db_path: Optional[str] = None,
 ) -> Client:
     if target_id is not None:
         return join_duet(
             target_id=target_id, loopback=loopback, network_url=network_url
         )
     else:
-        return launch_duet(logging=logging, network_url=network_url, loopback=loopback)
+        return launch_duet(
+            logging=logging, network_url=network_url, loopback=loopback, db_path=db_path
+        )
 
 
 def launch_duet(
@@ -178,6 +174,7 @@ def launch_duet(
     network_url: str = "",
     loopback: bool = False,
     credential_exchanger: DuetCredentialExchanger = OpenGridTokenManualInputExchanger(),
+    db_path: Optional[str] = None,
 ) -> Client:
     if os.path.isfile(LOGO_URL) and is_jupyter:
         display(
@@ -213,16 +210,7 @@ def launch_duet(
 
     info("♫♫♫ > " + bcolors.OKGREEN + "DONE!" + bcolors.ENDC, print=True)
 
-    db_engine = create_engine("sqlite://", echo=False)
-    Base.metadata.create_all(db_engine)  # type: ignore
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
-    my_domain = Domain(name="Launcher", db_engine=db_engine)
-
-    if len(my_domain.setup):  # Check if setup was defined previously
-        my_domain.name = my_domain.setup.node_name
-
-    if not len(my_domain.roles):  # Check if roles were registered previously
-        seed_db(SessionLocal())
+    my_domain = Domain(name="Launcher", db_path=db_path)
 
     if loopback:
         credential_exchanger = OpenGridTokenFileExchanger()
@@ -288,16 +276,7 @@ def join_duet(
 
     info("♫♫♫ > " + bcolors.OKGREEN + "DONE!" + bcolors.ENDC, print=True)
 
-    db_engine = create_engine("sqlite://", echo=False)
-    Base.metadata.create_all(db_engine)  # type: ignore
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
-    my_domain = Domain(name="Joiner", db_engine=db_engine)
-
-    if len(my_domain.setup):  # Check if setup was defined previously
-        my_domain.name = my_domain.setup.node_name
-
-    if not len(my_domain.roles):  # Check if roles were registered previously
-        seed_db(SessionLocal())
+    my_domain = Domain(name="Joiner")
 
     if loopback:
         credential_exchanger = OpenGridTokenFileExchanger()
