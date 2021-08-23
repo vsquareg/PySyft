@@ -26,6 +26,7 @@ from .om_signaling_client import WebRTC_HOST
 from .om_signaling_client import register
 from .ui import LOGO_URL
 from .webrtc_duet import Duet as WebRTCDuet  # noqa: F811
+from .jupyter_widget import process_widget
 
 if is_jupyter:
     # third party
@@ -66,6 +67,7 @@ def get_available_network() -> str:
 
 
 def begin_duet_logger(my_domain: Domain) -> None:
+    process_widget()
     # stdlib
     from contextlib import contextmanager
     import threading
@@ -180,7 +182,7 @@ def launch_duet(
         display(
             Image(
                 LOGO_URL,
-                width=400,
+                width=100,
                 unconfined=True,
             )
         )
@@ -246,7 +248,7 @@ def join_duet(
         display(
             Image(
                 LOGO_URL,
-                width=400,
+                width=100,
                 unconfined=True,
             )
         )
